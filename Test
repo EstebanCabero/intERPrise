@@ -1,0 +1,40 @@
+-- RUNSQLSTM SRCFILE(DEVEC/QSQLSRC) SRCMBR(CBRTRAF)      
+   CREATE TABLE APPSD/CBRTRAF                             
+-- DEFINE TABLE HERE                                         
+-- CREATE TABLE CBRTRAF                                      
+   (                                                         
+      CBR_Unique_NUmber              FOR COLUMN UNIQUENOL,   
+      User_Code                      FOR COLUMN USERC,       
+      Date_Transfered                FOR COLUMN ISODAT       
+   )                                                         
+   AS (SELECT                                                
+      UNIQUENO,                                              
+      USERC,                                                 
+      ISODAT                                                 
+   FROM DICTIONARY                                           
+   )                                                         
+   WITH NO DATA                                              
+   RCDFMT CBRTRAFR                                           
+   ;                                                         
+   CREATE ALIAS CBR_Transfer_File FOR CBRTRAF 
+      ;                                                                        
+   ALTER TABLE CBRTRAF ADD CONSTRAINT CBRTRAU UNIQUE (UNIQUENOL)            
+   ;                                                                        
+   ALTER TABLE CBRTRAF ADD CONSTRAINT CBRTRAR FOREIGN KEY (UNIQUENOL)       
+   REFERENCES CBRLOGF (UNIQUENOL) ON DELETE NO ACTION ON UPDATE NO          
+   ACTION                                                                   
+   ;                                                                        
+-- DEFINE LABELS HERE - TABLE                                               
+   LABEL ON TABLE CBRTRAF IS 'CBR Transfer File'                            
+   ;                                                                        
+-- DEFINE COLUMN LABELS HERE                                                
+   LABEL ON COLUMN CBRTRAF (                                                
+      UNIQUENOL  TEXT IS 'CBR Unique Number'                         ,      
+      USERC      TEXT IS 'Transfered By'                             ,      
+      ISODAT     TEXT IS 'Date Transfered'                                  
+   );                                                                       
+   LABEL ON COLUMN CBRTRAF (                                                
+      UNIQUENOL       IS 'CBR                 Unique              Number',  
+      USERC           IS 'Transfered          By'                        ,  
+      ISODAT          IS 'Date                Transfered'   
+   );
